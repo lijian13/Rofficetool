@@ -1,5 +1,5 @@
 Package: Rofficetool
-License: LGPL
+License: GPL-2
 Title: R Office tool.
 Type: Package
 LazyLoad: yes
