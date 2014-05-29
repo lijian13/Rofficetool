@@ -1,0 +1,14 @@
+Package: Rofficetool
+License: GPL-2
+Title: R Office tool.
+Type: Package
+LazyLoad: yes
+Author: Jian Li <rweibo@sina.com>
+Maintainer: Jian Li <rweibo@sina.com>
+Description: R Office tool.
+Version: 0.0-1
+Date: 2014-05-04
+Depends: R (>= 2.14.0), RDCOMClient
+Suggests: tmcn
+
+
