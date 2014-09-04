@@ -8,3 +8,5 @@
 *.Rproj
 *.zip
 *.tar.gz
+/.project
+/.gitignore
