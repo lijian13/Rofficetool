@@ -10,3 +10,4 @@
 *.tar.gz
 /.project
 /.gitignore
+/output
