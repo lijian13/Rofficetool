@@ -1,20 +1,14 @@
 
-##' Write a data.frame to a excel range.
+##' Write excel range to a picture file.
 ##' 
-##' @title Write a data.frame to a excel range.
-##' @param df the data.frame
-##' @param excelfile path of a excel file
-##' @param shtindex sheet index
-##' @param rangelefttop the range string, such as "A1"
-##' @return TRUE or FALSE
+##' @title Write excel range to a picture file.
+##' @param excelfile Path of a excel file.
+##' @param shtindex Sheet index.
+##' @param rangestring The range string, such as "A1".
+##' @param picfile The path of the picture.
+##' @param chartsize Chart size.
+##' @return TRUE or FALSE.
 ##' @author Jian Li <\email{rweibo@@sina.com}>
-
-
-#dF <- tdf2
-#excelfile <- "E:/Mango/Training/Youku/20140515/examples/report/table_1.xlsx"
-#shtindex <- 1
-#rangelefttop <- c(5, 2)
-# writeDfToRange( tdf2, "E:/Mango/Training/Youku/20140515/examples/report/table_1.xlsx", 1, c(5,2))
 
 writeRangeToPic <- function(excelfile, shtindex, rangestring, picfile, chartsize = c(800, 600)) {
     xlsfile <- normalizePath(excelfile, winslash = "/", mustWork = TRUE)

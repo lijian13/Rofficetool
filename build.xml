@@ -2,9 +2,9 @@
 	
 	<property environment = "env" />
 	<property name = "package.name" value = "Rofficetool" />
-	<property name = "r.home" value = "C:/Program Files/R/R-3.0.2" />
-	<property name = "rtools.home" value = "C:/Program Files/R/Rtools30" />
-	<property name = "gcc.home" value = "C:/Program Files/R/Rtools30/gcc-4.6.3" />
+	<property name = "r.home" value = "C:/R/R-3.1.3" />
+	<property name = "rtools.home" value = "C:/R/Rtools31" />
+	<property name = "gcc.home" value = "C:/R/Rtools31/gcc-4.6.3" />
 	<property name = "path" value = "${r.home}/bin;${rtools.home}/bin;${gcc.home}/bin;"/>
 	<property name = "output.folder" value = "${basedir}/output/"/>
 

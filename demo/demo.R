@@ -1,24 +1,21 @@
 
 
-require(Rofficetool)
-
-
-setwd("E:\\Mango\\Training\\Youku\\20140530\\examples\\vba")
-
 library(Rofficetool)
 
 templateppt <- system.file("examples", "pptdemo.ppt", package = "Rofficetool")
 templatexls <- system.file("examples", "exceldemo.xls", package = "Rofficetool")
 
-thisppt <- paste0("ppt", "_", format(Sys.time(), "%Y%m%d%H%M%S"), ".ppt")
-thisxls <- paste0("xls", "_", format(Sys.time(), "%Y%m%d%H%M%S"), ".xls")
-
 # copy template
-thisppt <- copyFromTemplate(templateppt, thisppt)
-thisxls <- copyFromTemplate(templatexls, thisxls)
+thisppt <- setOutput(templateppt)
+thisxls <- setOutput(templatexls)
+
+# read ppt file
+ppt1 <- readPPT(thisppt)
+class(ppt1)
 
 # parse ppt
-p1 <- parsePPT(thisppt)
+p1 <- parsePPT(ppt1)
+p1
 
 # write data.frame to range of excel
 d1 <- iris
@@ -38,20 +35,21 @@ pic1 <- writeRangeToPic(thisxls, shtindex = 2, rangestring = "B2:G10",
 pic2 <- writeChartToPic(thisxls, shtindex = 3, chartindex = 1, 
 	picfile = "p2.jpg")
 
+
 # write pic to ppt
 
-writePicToPPT(thisppt, picfile = pic1, ipage = 4, 
-	Position = c(100, 200), Size = c(540, 280))
+writePicToPPT(picfile = pic1, ppt1, ipage = 4, horizontal = 3.5, vertical = 7, height = 10, width = 20)
 
-writePicToPPT(thisppt, picfile = pic2, ipage = 3, 
-	Position = c(100, 200), Size = c(540, 280))
+writePicToPPT(picfile = pic2, ppt1, ipage = 3, horizontal = 3.5, vertical = 7, height = 10, width = 20)
+
 
 
 # write data.frame to ppt
-d3 <- d2[1:8, ]
-d3 <- cbind(rep(NA, nrow(d3)), d3)
-d3 <- rbind(rep(NA, ncol(d3)), d3)
+d3 <- matrix(round(rnorm(40), 2), 8, 5)
+writeDfToPPT(Df = d3, ppt1, ipage = 5, ishape = 2, startrow = 2, startcol = 2)
 
-writeDfToPPT(d3, thisppt, ipage = 5, ishape = 2) 
+
+# write text to ppt
+writeTextToPPT(as.character(Sys.Date()), ppt1, ipage = 1, ishape = 2)
 
 

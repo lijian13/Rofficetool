@@ -1,42 +1,37 @@
 
-##' Write a data.frame to a excel range.
+##' Write a data.frame to a ppt object.
 ##' 
-##' @title Write a data.frame to a excel range.
-##' @param df the data.frame
-##' @param excelfile path of a excel file
-##' @param shtindex sheet index
-##' @param rangelefttop the range string, such as "A1"
-##' @return TRUE or FALSE
+##' @title Write a data.frame to a ppt object.
+##' @param Df The data.frame to be written to ppt.
+##' @param pptobject A ppt object created by \code{\link{readPPT}}.
+##' @param ipage The page number.
+##' @param ishape The shape number.
+##' @param startrow The start row in the table of ppt.
+##' @param startcol The start column in the table of ppt.
+##' @return invisible TRUE or FALSE.
 ##' @author Jian Li <\email{rweibo@@sina.com}>
 
+writeDfToPPT <- function(Df, pptobject, ipage = 1, ishape = 1, startrow = 1, startcol = 1) {
 
-#dF <- tdf2
-#excelfile <- "E:/Mango/Training/Youku/20140515/examples/report/table_1.xlsx"
-#shtindex <- 1
-#rangelefttop <- c(5, 2)
-# writeDfToRange( tdf2, "E:/Mango/Training/Youku/20140515/examples/report/table_1.xlsx", 1, c(5,2))
-
-writeDfToPPT <- function(dF, pptfile, ipage = 1, ishape = 1) {
-
-	pptfile <- normalizePath(pptfile, winslash = "/", mustWork = TRUE)
-	pptapp <- COMCreate("PowerPoint.Application")
-	pptpre <- pptapp[["Presentations"]]$Open(pptfile)
-	pptslide <- pptpre[["Slides"]]$Item(ipage)
+	pptslide <- pptobject[["Com"]][["Slides"]]$Item(ipage)
 	pptshape <- pptslide[["Shapes"]]$Item(ishape)
 	if (pptshape$type() != 19) stop("This shape is not a table!")
 	ntblrow <- pptshape[["Table"]][["Rows"]]$Count()
 	ntblcol <- pptshape[["Table"]][["Columns"]]$Count()
+	ndfrow <- nrow(Df)
+	ndfcol <- ncol(Df)
+	if (ntblrow - ndfrow != startrow - 1) stop("Wrong row number!")
+	if (ntblcol - ndfcol != startcol - 1) stop("Wrong column number!")
 	
-	for (i in 1:ntblrow) {
-		for (j in 1:ntblcol) {
-			if (!is.null(dF[i,j]) && !is.na(dF[i,j])) {
-				tmp.table <- pptshape[["Table"]]$Cell(i, j)[["Shape"]][["TextFrame"]][["TextRange"]]
-				tmp.table[["Text"]] <- dF[i, j]
+	for (i in 1:ndfrow) {
+		for (j in 1:ndfcol) {
+			if (!is.null(Df[i, j]) && !is.na(Df[i,j])) {
+				tmp.table <- pptshape[["Table"]]$Cell(i + startrow - 1, j + startcol - 1)[["Shape"]][["TextFrame"]][["TextRange"]]
+				tmp.table[["Text"]] <- Df[i, j]
 			}
 		}
 	}
 	
-	pptpre$Save()
-	pptpre$Close()
+	invisible(TRUE)
 }
 
